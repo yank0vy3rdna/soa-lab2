@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import styled from "styled-components";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import {deleteWorker, fire, indexing} from "../../api/profile/requests";
-import {Button, Input} from "@chakra-ui/react";
+import {Box, Button, Input} from "@chakra-ui/react";
 
 const StyledWorker = styled.div`{
   position: relative;
@@ -68,20 +68,10 @@ const IconSecondWrapper = styled.div`{
 
 export const Worker = ({data, fetchList}) => {
     const [coef, setCoef] = useState()
-    const [workerData, setWorkerData] = useState({
-        id: {
-            _text: '',
-        },
-        name: {
-            _text: '',
-        },
-        salary: {
-            _text: '',
-        },
-        status: {
-            _text: '',
-        },
-        organization: {
+    if (data === undefined) return <></>
+    const workerData = data
+    if (workerData.organization === undefined) {
+        workerData.organization = {
             fullName: {
                 _text: '',
             },
@@ -89,11 +79,7 @@ export const Worker = ({data, fetchList}) => {
                 _text: '',
             },
         }
-    })
-    useEffect(() => {
-        setWorkerData(data)
-
-    }, [])
+    }
 
     return <StyledWorker>
         <IconWrapper onClick={() => deleteWorker(workerData.id._text).then(() => fetchList())}>
@@ -117,13 +103,17 @@ export const Worker = ({data, fetchList}) => {
         <StyledHeading size={'16px'} align={'left'}
                        color={'saddlebrown'}>OrgType: {workerData.organization.type._text}</StyledHeading>
         <StyledHeading size={'16px'} align={'left'} color={'saddlebrown'}>
-            <Input m={'5px 0'} placeholder='coef'
-                   onChange={(e) => {
-                       setCoef(e.target.value)
-                   }}/>
-            <Button onClick={() => {
-                indexing(coef, workerData.id._text).then(() => fetchList())
-            }}>Index salary</Button>
+            <Box border={'1px solid'} p={'5px'}>
+                <Input m={'5px 0'} placeholder='coef'
+                       onChange={(e) => {
+                           setCoef(e.target.value)
+                       }}/>
+                <Button onClick={() => {
+                    indexing(coef, workerData.id._text).then(() => {
+                        fetchList()
+                    })
+                }}>Index salary</Button>
+            </Box>
         </StyledHeading>
     </StyledWorker>
 }

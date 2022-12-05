@@ -3,18 +3,13 @@ import styled from "styled-components";
 import {Button} from "../components/button/Button";
 import {Workers} from "../components/workers/Workers";
 import {
-    Box,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent, ModalFooter,
-    ModalHeader,
+    Box, Modal,
+    ModalContent,
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/react";
-import AddUser from "../components/AddUser";
 import * as PropTypes from "prop-types";
-import ParametrizedModalBody from "../components/ParametrizedModalBody";
+import ParametrizedModalBody from "../components/modals/ParametrizedModalBody";
 
 const StyledPanelWrapper = styled.section`{
   position: relative;
@@ -47,28 +42,33 @@ const ButtonWrapper = styled.div`{
   align-items: center;
 }`
 
+const buttonColor = '#abcaff'
 
 ParametrizedModalBody.propTypes = {modalType: PropTypes.any};
 export const AdminPanel = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [modalType, setModalType] = useState("addUser");
+    const [listType, setListType] = useState('ALL')
 
 
     return <StyledPanelWrapper>
-        <Box position={'absolute'}>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered
-            >
-                <ModalOverlay style={{opacity: "25%"}}
+        <Box position={'absolute'} w={'100vw'} h={'100vh'}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                <ModalOverlay zIndex={5000} style={{opacity: "25%"}}
                               backdropFilter='auto'
-                              backdropBlur='2px'/>
-                <ModalContent style={{
-                    background: 'black',
-                    width: '0px',
-                    zIndex: 10000,
-                    left: '45%',
-                }}>
-                    <ParametrizedModalBody modalType={modalType}/>}
-                </ModalContent>
+                              backdropBlur='2px' onClick={onClose}>
+                    <ModalContent style={{
+                        zIndex: 10000,
+                        position: 'relative',
+                        width: '100vw',
+                        height: '0px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ParametrizedModalBody modalType={modalType} onClose={onClose} listType={listType}
+                                               setListType={setListType}/>
+                    </ModalContent></ModalOverlay>
             </Modal>
         </Box>
         <StyledPanel>
@@ -77,15 +77,25 @@ export const AdminPanel = () => {
                 <div onClick={() => {
                     setModalType("addUser");
                 }}>
-                    <Button text={'Add user'} onClick={onOpen} color={'white'} bgColor={'red'}/>
+                    <Button text={'Add user'} onClick={onOpen} bgColor={buttonColor}/>
                 </div>
-                <Button text={'Del user by status'} color={'darkgreen'} bgColor={'green'}/>
+                <div onClick={() => {
+                    setModalType("deleteUserByStatus");
+                }}>
+                    <Button text={'Del user by status'} onClick={onOpen} bgColor={buttonColor}/>
+                </div>
                 <div onClick={() => {
                     setModalType("maxOrg");
                 }}>
-                <Button text={'Get with Max Org'} onClick={onOpen} color={'white'} bgColor={'blue'}/></div>
+                    <Button text={'Get with Max Org'} onClick={onOpen} bgColor={buttonColor}/>
+                </div>
+                <div onClick={() => {
+                    setModalType("setListType");
+                }}>
+                    <Button text={'Set list type'} onClick={onOpen} bgColor={buttonColor}/>
+                </div>
             </ButtonWrapper>
-            <Workers/>
+            <Workers isOpen={isOpen} listType={listType}/>
         </StyledPanel>
     </StyledPanelWrapper>
 }

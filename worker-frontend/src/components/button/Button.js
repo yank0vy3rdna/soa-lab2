@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 
 const StyledButton = styled.button`{
-  color: aliceblue;
   width: 160px;
   height: 50px;
   border: 1px solid ${props => props.color};

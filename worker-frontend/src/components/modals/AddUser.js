@@ -1,13 +1,13 @@
-import {Button, Heading, Input} from "@chakra-ui/react";
+import {Box, Button, Heading, Input} from "@chakra-ui/react";
 import {useState} from "react";
-import {createWorker} from "../api/profile/requests";
+import {createWorker} from "../../api/profile/requests";
 
-const AddUser = () => {
+const AddUser = ({onClose}) => {
     const [name, setName] = useState("")
     const [salary, setSalary] = useState(0)
     const [x, setX] = useState(0)
     const [y, setY] = useState(0)
-    return <div>
+    return <Box width={'300px'}>
         <Heading m={0} align={'center'} as={'h2'}>Add user</Heading>
         <Input onChange={(e) => {
             setName(e.target.value)
@@ -29,8 +29,11 @@ const AddUser = () => {
                 salary: salary,
                 x: x,
                 y: y
-            }).then(()=>alert("User created"))
+            }).then(()=> {
+                alert("User created")
+                onClose()
+            })
         }}>Создать</Button>
-    </div>
+    </Box>
 }
 export default AddUser;
