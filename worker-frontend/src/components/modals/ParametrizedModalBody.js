@@ -5,7 +5,7 @@ import UpdateUser from "./UpdateUser";
 import DelUserByStatus from "./DelUserByStatus";
 import ListType from "./ListType";
 
-const ParametrizedModalBody = ({modalType, onClose, listType, setListType}) => {
+const ParametrizedModalBody = ({modalType, onClose, listType, setListType, workerToUpdate}) => {
     let body;
     switch (modalType) {
         case "addUser":
@@ -15,7 +15,9 @@ const ParametrizedModalBody = ({modalType, onClose, listType, setListType}) => {
             body = <MaxOrg onClose={onClose}/>
             break
         case "updateUser":
-            body = <UpdateUser onClose={onClose}/>
+            if (workerToUpdate == null)
+                body = <>Loading...</>
+            body = <UpdateUser workerData={workerToUpdate} onClose={onClose}/>
             break
         case "deleteUserByStatus":
             body = <DelUserByStatus onClose={onClose}/>

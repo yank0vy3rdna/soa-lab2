@@ -26,6 +26,10 @@ public class FilterParser {
                 case "eq":
                     Path<Object> path = workerRoot.get(s[0]);
                     Object instance;
+                    if (path.getJavaType().isAssignableFrom(String.class)) {
+                        predicate = cb.equal(path, s[2]);
+                        break;
+                    }
                     instance = path.getJavaType().cast(
                             path.getJavaType().
                                     getDeclaredMethod("valueOf", String.class).

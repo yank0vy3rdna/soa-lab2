@@ -9,11 +9,9 @@ import ru.yank0vy3rdna.hr.models.Worker;
 import ru.yank0vy3rdna.hr.models.WorkerInput;
 import ru.yank0vy3rdna.hr.services.CrudService;
 
-import java.io.PrintStream;
-
 @RestController
 @RequestMapping("/")
-@CrossOrigin(originPatterns = "*")
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD, RequestMethod.PATCH}, allowCredentials = "true")
 public class HRRestController {
     private final CrudService crudService;
 

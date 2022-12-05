@@ -50,6 +50,7 @@ export const AdminPanel = () => {
     const [modalType, setModalType] = useState("addUser");
     const [listType, setListType] = useState('ALL')
 
+    const [workerToUpdate, setWorkerToUpdate] = useState(null)
 
     return <StyledPanelWrapper>
         <Box position={'absolute'} w={'100vw'} h={'100vh'}>
@@ -67,7 +68,7 @@ export const AdminPanel = () => {
                         justifyContent: 'center'
                     }}>
                         <ParametrizedModalBody modalType={modalType} onClose={onClose} listType={listType}
-                                               setListType={setListType}/>
+                                               setListType={setListType} workerToUpdate={workerToUpdate}/>
                     </ModalContent></ModalOverlay>
             </Modal>
         </Box>
@@ -95,7 +96,11 @@ export const AdminPanel = () => {
                     <Button text={'Set list type'} onClick={onOpen} bgColor={buttonColor}/>
                 </div>
             </ButtonWrapper>
-            <Workers isOpen={isOpen} listType={listType}/>
+            <Workers isOpen={isOpen} listType={listType} updateWorker={(workerData) => {
+                setWorkerToUpdate(workerData)
+                setModalType("updateUser")
+                onOpen()
+            }}/>
         </StyledPanel>
     </StyledPanelWrapper>
 }

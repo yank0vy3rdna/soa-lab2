@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const domainUrl = 'http://localhost:8080/workers';
-const hrUrl = 'http://localhost:8080/hr';
+const domainUrl = '/workers';
+const hrUrl = '/hr';
 
 let convert = require('xml-js');
 

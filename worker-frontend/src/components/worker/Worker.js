@@ -8,7 +8,6 @@ import {Box, Button, Input} from "@chakra-ui/react";
 const StyledWorker = styled.div`{
   position: relative;
   width: 200px;
-  height: 400px;
   background: rgba(255, 140, 0, 0.5);
   border: 2px solid darkorange;;
   text-align: left;
@@ -66,7 +65,7 @@ const IconSecondWrapper = styled.div`{
 }`
 
 
-export const Worker = ({data, fetchList}) => {
+export const Worker = ({data, fetchList, updateWorker}) => {
     const [coef, setCoef] = useState()
     if (data === undefined) return <></>
     const workerData = data
@@ -80,7 +79,6 @@ export const Worker = ({data, fetchList}) => {
             },
         }
     }
-
     return <StyledWorker>
         <IconWrapper onClick={() => deleteWorker(workerData.id._text).then(() => fetchList())}>
             <DeleteForeverIcon/>
@@ -114,6 +112,12 @@ export const Worker = ({data, fetchList}) => {
                     })
                 }}>Index salary</Button>
             </Box>
+        </StyledHeading>
+        <StyledHeading size={'16px'} align={'left'} color={'saddlebrown'}>
+
+            <Button onClick={() => {
+                updateWorker(workerData)
+            }}>Update</Button>
         </StyledHeading>
     </StyledWorker>
 }

@@ -1,11 +1,13 @@
 package ru.yank0vy3rdna.hr;
 
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.codehaus.stax2.ri.Stax2ReaderAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +25,12 @@ public class HrApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(HrApplication.class, args);
+    }
+
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(applicationClass);
     }
 
     @Value("${keystore.file}")
@@ -53,15 +61,9 @@ public class HrApplication extends SpringBootServletInitializer {
             requestFactory.setConnectTimeout(6000);
             requestFactory.setConnectionRequestTimeout(6000);
             return new RestTemplate(requestFactory);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException();
         }
     }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(applicationClass);
-    }
-
     private static final Class<HrApplication> applicationClass = HrApplication.class;
 }

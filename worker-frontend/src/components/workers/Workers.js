@@ -98,7 +98,7 @@ const possibleFilters = [
     }
 ]
 
-export const Workers = ({isOpen, listType}) => {
+export const Workers = ({isOpen, listType, updateWorker}) => {
     const [hashSalary, setHashSalary] = useState(0)
     const [hashId, setHashId] = useState(0)
     const [hashName, setHashName] = useState(0)
@@ -239,7 +239,7 @@ export const Workers = ({isOpen, listType}) => {
     let workersList = <>
         <StyledWorkers>
             {(workers !== undefined) ? workers.map((item) =>
-                <Worker data={item} key={item.id._text} fetchList={fetchList}/>
+                <Worker updateWorker={updateWorker} data={item} key={item.id._text} fetchList={fetchList}/>
             ) : <></>}
         </StyledWorkers>
         <StyledPagination>

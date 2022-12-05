@@ -30,7 +30,6 @@ const AddUser = ({onClose}) => {
                 x: x,
                 y: y
             }).then(()=> {
-                alert("User created")
                 onClose()
             })
         }}>Создать</Button>
