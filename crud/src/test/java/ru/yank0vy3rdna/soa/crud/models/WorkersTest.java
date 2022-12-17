@@ -2,6 +2,8 @@ package ru.yank0vy3rdna.soa.crud.models;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import ru.yank0vy3rdna.soa.lab3.common.models.Worker;
+import ru.yank0vy3rdna.soa.lab3.common.models.Workers;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;

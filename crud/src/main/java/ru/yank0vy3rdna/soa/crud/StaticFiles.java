@@ -23,7 +23,7 @@ public class StaticFiles {
         if (path.length() == 0) {
             path = "index.html";
         }
-        String resourcePath = String.format("/WEB-INF/%s", path);
+        String resourcePath = String.format("/WEB-INF/frontend/%s", path);
         System.out.println(resourcePath);
         InputStream resource = context.getResourceAsStream(resourcePath);
 

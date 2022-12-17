@@ -1,0 +1,22 @@
+version: "3.1"
+services:
+  config_server:
+    image: hyness/spring-cloud-config-server
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+  eureka:
+    image: springcloud/eureka
+    environment:
+      CONFIG_SERVER_URL: "http://config_server:8888"
+  wildfly:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+  postgres:
+    image: postgres:13.3-alpine
+    environment:
+      POSTGRES_PASSWORD: qwerty123
+      POSTGRES_USER: soa
+      POSTGRES_DB: soa

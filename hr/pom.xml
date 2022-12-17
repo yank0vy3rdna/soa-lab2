@@ -8,7 +8,7 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ru.yank0vy3rdna</groupId>
+    <groupId>ru.yank0vy3rdna.soa.lab3</groupId>
     <artifactId>hr</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -89,6 +89,12 @@
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>2.14.1</version>
         </dependency>
+        <dependency>
+            <groupId>ru.yank0vy3rdna.soa.lab3</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+<!--            <scope>compile</scope>-->
+        </dependency>
 
     </dependencies>
 
@@ -104,7 +110,7 @@
                 <configuration>
                     <layout>WAR</layout>
                     <executable>true</executable>
-                    <mainClass>ru.yank0vy3rdna.hr.HrApplication</mainClass>
+                    <mainClass>ru.yank0vy3rdna.soa.lab3.hr.HrApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
