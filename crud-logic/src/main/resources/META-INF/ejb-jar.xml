@@ -11,6 +11,7 @@
             <ejb-class>ru.yank0vy3rdna.soa.lab3.crud_logic.services.WorkerServiceImpl</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
+
         </session>
     </enterprise-beans>
 </ejb-jar>

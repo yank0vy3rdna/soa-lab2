@@ -11,12 +11,14 @@ import ru.yank0vy3rdna.soa.lab3.common.models.Status;
 import ru.yank0vy3rdna.soa.lab3.common.models.Worker;
 import ru.yank0vy3rdna.soa.lab3.common.models.WorkerInput;
 import ru.yank0vy3rdna.soa.lab3.crud_logic.utils.Database;
+import org.jboss.ejb3.annotation.Pool;
 
 import java.util.List;
 
 @Stateless(name = "WorkerService")
 @Remote(WorkerService.class)
 @Dependent
+@Pool("worker-service")
 public class WorkerServiceImpl implements WorkerService {
 
     @Inject

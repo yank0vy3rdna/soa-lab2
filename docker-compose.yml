@@ -4,6 +4,11 @@ services:
     image: hyness/spring-cloud-config-server
     environment:
       SPRING_PROFILES_ACTIVE: native
+  consul:
+    image: consul:1.1.0
+    hostname: localhost
+    ports:
+      - "8500:8500"
   eureka:
     image: springcloud/eureka
     environment:
