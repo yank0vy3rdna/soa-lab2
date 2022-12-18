@@ -5,11 +5,10 @@
 <!--    <module-name>crud-logic</module-name>-->
     <enterprise-beans>
         <session>
-            <ejb-name>HelloWorldImpl</ejb-name>
-            <mapped-name>ejb/HelloWorldImpl</mapped-name>
-<!--            <business-local>com.mydomain.HelloSessionBeanLocal</business-local>-->
-            <business-remote>ru.yank0vy3rdna.soa.lab3.crud_logic.services.HelloWorld</business-remote>
-            <ejb-class>ru.yank0vy3rdna.soa.lab3.crud_logic.services.HelloWorldImpl</ejb-class>
+            <ejb-name>WorkerServiceImpl</ejb-name>
+            <mapped-name>ejb/WorkerServiceImpl</mapped-name>
+            <business-remote>ru.yank0vy3rdna.soa.lab3.crud_logic.services.WorkerService</business-remote>
+            <ejb-class>ru.yank0vy3rdna.soa.lab3.crud_logic.services.WorkerServiceImpl</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>

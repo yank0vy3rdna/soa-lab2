@@ -11,8 +11,9 @@
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.connection.autocommit">true</property>
+<!--        <property name="hibernate.type.json_format_mapper">org.hibernate.type.jackson.JacksonJsonFormatMapper</property>-->
         <mapping class="ru.yank0vy3rdna.soa.lab3.common.models.Worker"/>
     </session-factory>
 </hibernate-configuration>

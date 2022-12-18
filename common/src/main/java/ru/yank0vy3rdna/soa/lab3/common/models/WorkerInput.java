@@ -1,23 +1,23 @@
 package ru.yank0vy3rdna.soa.lab3.common.models;
 
 
-
-
 import ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters.LocalDateTimeXmlAdapter;
 import ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters.ZonedDateTimeXmlAdapter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class WorkerInput {
+public class WorkerInput implements Serializable {
+    private static final long serialVersionUID = -558553967080513790L;
 
     private String name = null;
 

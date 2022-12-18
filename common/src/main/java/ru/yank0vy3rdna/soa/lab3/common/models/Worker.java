@@ -1,6 +1,12 @@
 package ru.yank0vy3rdna.soa.lab3.common.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters.LocalDateTimeXmlAdapter;
 import ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters.LocalDateXmlAdapter;
 import ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters.ZonedDateTimeXmlAdapter;
@@ -9,45 +15,54 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+@Entity(name = "worker")
+@Table(name = "workers")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Worker {
+public class Worker implements Serializable {
+    private static final long serialVersionUID = -558553967080513790L;
     @XmlElement
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Valid Long id = null;
 
     @XmlElement
+    @Column(name = "name")
     private @Valid String name = null;
 
     @XmlElement
+    @Column(name = "coordinates")
     private @Valid Coordinates coordinates = null;
 
     @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
     @XmlElement
+    @Column(name = "created_at")
     private @Valid LocalDate creationDate = LocalDate.now();
 
+    @Column(name = "salary")
     private @Valid Integer salary = null;
 
     //    @Basic
     @XmlJavaTypeAdapter(ZonedDateTimeXmlAdapter.class)
+    @Column(name = "started_at")
     private @Valid ZonedDateTime startDate = null;
 
     //    @Basic
     @XmlJavaTypeAdapter(LocalDateTimeXmlAdapter.class)
+    @Column(name = "ended_at")
     private @Valid LocalDateTime endDate = null;
 
     @XmlElement
+    @Column(name = "status")
     private @Valid Status status = null;
     @XmlElement
+    @Column(name = "organization")
     private @Valid Organization organization = null;
 
     /**
@@ -59,7 +74,7 @@ public class Worker {
     }
 
 
-    @JsonProperty("id")
+    //    @JsonProperty("id")
     @NotNull
     @Min(1)
     public Long getId() {

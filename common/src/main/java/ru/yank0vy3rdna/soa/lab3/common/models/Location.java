@@ -4,13 +4,14 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
+import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Location {
+public class Location implements Serializable {
+    private static final long serialVersionUID = -558553967080513790L;
 
     private @Valid Integer x = null;
 

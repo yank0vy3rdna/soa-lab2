@@ -1,10 +1,12 @@
 package ru.yank0vy3rdna.soa.lab3.common.models;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Coordinates {
+public class Coordinates implements Serializable {
+    private static final long serialVersionUID = -558553967080513790L;
 
     private Long x = null;
 

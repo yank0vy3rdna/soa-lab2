@@ -1,6 +1,6 @@
 package ru.yank0vy3rdna.soa.lab3.common.utils.xmladapters;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

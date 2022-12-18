@@ -2,8 +2,8 @@ package ru.yank0vy3rdna.soa.lab3.common.models;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 
 import java.util.Objects;
