@@ -18,15 +18,33 @@ services:
     build:
       context: .
     ports:
-      - "8080:8080"
       - "9990:9990"
   hr-service:
     build:
       context: hr/.
     environment:
+      HOST: hr-service
+  hr-service-1:
+    build:
+      context: hr/.
+    environment:
       HOST: hr-service-1
+  hr-service-2:
+    build:
+      context: hr/.
+    environment:
+      HOST: hr-service-2
+  hr-service-3:
+    build:
+      context: hr/.
+    environment:
+      HOST: hr-service-3
+  spring-cloud-gateway:
+    build:
+      context: gateway/.
     ports:
-      - "8081:8081"
+      - "9912:9912"
+
   postgres:
     image: postgres:13.3-alpine
     environment:

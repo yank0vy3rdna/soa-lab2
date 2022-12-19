@@ -1,0 +1,36 @@
+server:
+  port: 9912
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka
+
+
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    consul:
+      discovery:
+        enabled: true
+      port: 8500
+      host: consul
+    gateway:
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
+      routes:
+        - id: hr
+          uri: lb://hr
+          predicates:
+            - Path=/hr/**
+          filters:
+            - StripPrefix=1
+          order: 0
+        - id: crud
+          uri: lb://crud
+          predicates:
+            - Path=/**
+          order: 1

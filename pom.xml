@@ -20,7 +20,8 @@
 
     <modules>
         <module>crud</module>
-<!--        <module>hr</module>-->
+<!--        <module>zuul-proxy</module>-->
+        <!--        <module>hr</module>-->
 <!--        <module>common</module>-->
 <!--        <module>crud-logic</module>-->
     </modules>

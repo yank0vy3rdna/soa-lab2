@@ -18,7 +18,7 @@ import java.util.Collections;
 @Singleton
 @Startup
 public class ConsulConfig {
-    String serviceId = "soa-3-1.0-SNAPSHOT";
+    String serviceId = "crud";
     Consul client;
     AgentClient agentClient;
 
