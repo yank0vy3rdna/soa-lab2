@@ -11,7 +11,7 @@ import ru.yank0vy3rdna.soa.lab3.hr.services.CrudService;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD, RequestMethod.PATCH}, allowCredentials = "true")
+//@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD, RequestMethod.PATCH}, allowCredentials = "true")
 public class HRRestController {
     private final CrudService crudService;
 
@@ -27,12 +27,10 @@ public class HRRestController {
             worker.setSalary(Math.toIntExact(Math.round(workerFromCrud.getSalary() * coeff)));
             this.crudService.update(workerId, worker);
             return ResponseEntity.ok().build();
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new NotFoundException();
-        } catch (Exception e) {
-            Worker worker = new Worker();
-            worker.setName(e.getMessage());
-            return ResponseEntity.ok(worker);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().value() == 404)
+                throw new NotFoundException();
+            throw e;
         }
     }
 
@@ -43,8 +41,11 @@ public class HRRestController {
             worker.setStatus(Status.FIRED);
             this.crudService.update(workerId, worker);
             return ResponseEntity.ok().build();
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new NotFoundException();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().value() == 404)
+                throw new NotFoundException();
+            throw e;
         }
+
     }
 }

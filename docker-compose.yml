@@ -13,12 +13,18 @@ services:
     image: springcloud/eureka
     environment:
       CONFIG_SERVER_URL: "http://config_server:8888"
+    ports:
+      - "8761:8761"
   wildfly:
     build:
       context: .
     ports:
       - "8080:8080"
       - "9990:9990"
+  hr-service:
+    image: hr:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8081"
   postgres:
     image: postgres:13.3-alpine
     environment:

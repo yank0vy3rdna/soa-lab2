@@ -2,67 +2,52 @@ package ru.yank0vy3rdna.soa.lab3.hr;
 
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.ribbon.RibbonClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import ru.yank0vy3rdna.soa.lab3.hr.ribbon.RibbonClientConfig;
+import ru.yank0vy3rdna.soa.lab3.hr.utils.JakartaXmlHttpMessageConverter;
 
-import java.io.FileInputStream;
-import java.security.KeyStore;
+import java.util.List;
+
 
 @SpringBootApplication
-public class HrApplication extends SpringBootServletInitializer {
+@RibbonClients(defaultConfiguration = RibbonClientConfig.class)
+public class HrApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HrApplication.class, args);
+        new SpringApplicationBuilder(HrApplication.class).web(WebApplicationType.SERVLET).run(args);
     }
 
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(applicationClass);
-    }
-
-    @Value("${keystore.file}")
-    private String keyStoreFile;
-    @Value("${keystore.password}")
-    private String keyStorePassword;
-
+    @LoadBalanced
     @Bean
     public RestTemplate restTemplate() {
         try {
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(new FileInputStream(keyStoreFile),
-                    keyStorePassword.toCharArray());
-
-            SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-                    new SSLContextBuilder()
-                            .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                            .loadKeyMaterial(keyStore, keyStorePassword.toCharArray())
-                            .build(),
-                    NoopHostnameVerifier.INSTANCE);
-
-            HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
-                    socketFactory).build();
+            HttpClient httpClient = HttpClients.custom().build();
 
             HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
                     httpClient);
             requestFactory.setReadTimeout(6000);
             requestFactory.setConnectTimeout(6000);
             requestFactory.setConnectionRequestTimeout(6000);
-            return new RestTemplate(requestFactory);
+            RestTemplate restTemplate = new RestTemplate(requestFactory);
+            List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
+            converters.add(new JakartaXmlHttpMessageConverter());
+            restTemplate.setMessageConverters(converters);
+            return restTemplate;
         } catch (Exception e) {
             throw new RuntimeException();
         }
     }
-    private static final Class<HrApplication> applicationClass = HrApplication.class;
+
 }

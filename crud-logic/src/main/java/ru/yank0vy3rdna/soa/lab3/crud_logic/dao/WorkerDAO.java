@@ -47,7 +47,7 @@ public class WorkerDAO {
     }
 
     public Worker getWorkerWithMaxOrg(Session session) {
-        return session.createNativeQuery("select * from workers order by organization->>'fullName' desc limit 1", Worker.class).getSingleResult();
+        return session.createNativeQuery("select * from workers order by organization desc limit 1", Worker.class).getSingleResult();
     }
 
     @SneakyThrows

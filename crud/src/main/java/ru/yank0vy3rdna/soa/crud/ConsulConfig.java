@@ -9,7 +9,10 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ejb.Startup;
 import jakarta.ejb.Singleton;
+import lombok.SneakyThrows;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.Collections;
 
 @Singleton
@@ -19,25 +22,29 @@ public class ConsulConfig {
     Consul client;
     AgentClient agentClient;
 
+    @SneakyThrows
     @PostConstruct
     void init() {
         client = Consul.builder().withHostAndPort(HostAndPort.fromParts("consul", 8500)).build();
         agentClient = client.agentClient();
-        Registration service = ImmutableRegistration.builder()
-                .id(serviceId)
-                .name(serviceId)
-                .port(8500)
-                .address("consul")
-                .check(Registration.RegCheck.http("http://wildfly:8080/healthcheck", 10, 1))
-                .tags(Collections.singletonList("tag1"))
-                .meta(Collections.singletonMap("version", "1.0"))
-                .build();
 
-        agentClient.register(service);
+        try (final DatagramSocket socket = new DatagramSocket()) {
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+            Registration service = ImmutableRegistration.builder()
+                    .id(serviceId)
+                    .name(serviceId)
+                    .port(8080)
+                    .address(socket.getLocalAddress().getHostAddress())
+                    .check(Registration.RegCheck.http("http://"+socket.getLocalAddress().getHostAddress()+":8080/healthcheck", 10, 1))
+                    .tags(Collections.singletonList("crud-service"))
+                    .meta(Collections.singletonMap("version", "1.0"))
+                    .build();
+            agentClient.register(service);
+        }
     }
 
     @PreDestroy
-    private void deregisterService(){
+    private void deregisterService() {
         agentClient.deregister(serviceId);
     }
 

@@ -40,8 +40,8 @@ class EJBClientTest {
         WorkerInput workerInput = new WorkerInput();
         workerInput.setName("gloa");
         workerInput.setCoordinates(new Coordinates());
-        Worker worker = GetWorkerService().createWorker(workerInput);
-        System.out.println("Worker created: " + worker.getId());
+//        Worker worker = GetWorkerService().createWorker(workerInput);
+//        System.out.println("Worker created: " + worker.getId());
     }
 
 

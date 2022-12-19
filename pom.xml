@@ -23,7 +23,6 @@
 <!--        <module>hr</module>-->
 <!--        <module>common</module>-->
 <!--        <module>crud-logic</module>-->
-<!--        <module>test-jax-rs</module>-->
     </modules>
 
 </project>
