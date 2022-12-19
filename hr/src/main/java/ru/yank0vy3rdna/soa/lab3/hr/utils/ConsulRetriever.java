@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class ConsulRetriever {
     public List<String> getCrudAddresses() {
-        Consul client = Consul.builder().withHostAndPort(HostAndPort.fromParts("localhost", 8500)).build();
+        Consul client = Consul.builder().withUrl("http://consul:8500").build();
         AgentClient agentClient = client.agentClient();
         Map<String, Service> services = agentClient.getServices();
         return services.values().stream().filter(x -> x.getTags().contains("crud-service")).map(service -> "http://" + service.getAddress() + ":" + service.getPort()).collect(Collectors.toList());

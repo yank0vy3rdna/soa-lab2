@@ -2,6 +2,7 @@ package ru.yank0vy3rdna.soa.lab3.crud_logic.dao;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -43,11 +44,19 @@ public class WorkerDAO {
     }
 
     public Worker getWorkerById(Session session, Long workerId) {
-        return (Worker) session.createQuery("from worker where id=:id").setParameter("id", workerId).getSingleResult();
+        try {
+            return (Worker) session.createQuery("from worker where id=:id").setParameter("id", workerId).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public Worker getWorkerWithMaxOrg(Session session) {
-        return session.createNativeQuery("select * from workers order by organization desc limit 1", Worker.class).getSingleResult();
+        try {
+            return session.createNativeQuery("select * from workers order by organization desc limit 1", Worker.class).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @SneakyThrows
