@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="315feac5-1bdb-4dda-8907-5b9b41dfa5db" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="73be38c4-6c5e-475c-9b0d-ad027cf2f3ad">
+		<http:request-connection host="wildfly" port="8080" />
+	</http:request-config>
+	<flow name="mulesoaFlow1" doc:id="f93e66b9-2eb9-4adc-9040-8c8e48256efb" >
+		<http:listener doc:name="Listener" doc:id="e37ac870-0a2b-41c7-8151-822c342b2633" config-ref="HTTP_Listener_config" path="/workers/{WorkerId}"/>
+		<http:request method="GET" doc:name="Request" doc:id="99993856-f976-4288-af9b-13268720b1ee" config-ref="HTTP_Request_configuration" path="/workers/{WorkerId}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"WorkerId" : attributes.uriParams.WorkerId
+}]]]></http:uri-params>
+		</http:request>
+	</flow>
+	<flow name="mulesoaFlow" doc:id="f3bee1f8-e5a8-441a-aae8-247a92c30052" >
+		<http:listener doc:name="Listener" doc:id="59701350-6cd8-4d66-9f85-fbf43c244319" config-ref="HTTP_Listener_config" path="/workers" allowedMethods="PATCH"/>
+		<http:request method="PATCH" doc:name="Request" doc:id="a903df7c-d754-477f-992b-7ac1029235d4" config-ref="HTTP_Request_configuration" path="/workers">
+			<http:query-params><![CDATA[#[output application/java
+---
+{
+	workerId : attributes.queryParams.workerId
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

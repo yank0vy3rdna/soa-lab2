@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workerInput>
+    <name>Worker Name 1</name>
+    <coordinates>
+        <x>51</x>
+        <y>43</y>
+    </coordinates>
+    <salary>123</salary>
+    <startDate>2021-12-03T10:15:30+03:00</startDate>
+    <endDate>2022-12-03T10:15:30</endDate>
+    <status>HIRED</status>
+    <organization>
+        <fullName>organization</fullName>
+        <type>COMMERCIAL</type>
+        <postalAddress>
+            <street>Pushkina</street>
+            <zipCode>132554</zipCode>
+            <town>
+                <x>123</x>
+                <name>Moscow</name>
+            </town>
+        </postalAddress>
+    </organization>
+</workerInput>

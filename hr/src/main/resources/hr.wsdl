@@ -1,0 +1,57 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://soa.yank0vy3rdna.ru/services/hr"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soa.yank0vy3rdna.ru/services/hr"
+                  targetNamespace="http://soa.yank0vy3rdna.ru/services/hr">
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soa.yank0vy3rdna.ru/services/hr">
+            <element name="indexRequest">
+                <complexType>
+                    <sequence>
+                        <element name="coeff" type="float"/>
+                        <element name="workerId" type="long"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="fireRequest">
+                <complexType>
+                    <sequence>
+                        <element name="workerId" type="long"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="fireRequest">
+        <wsdl:part element="tns:fireRequest" name="fireRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="indexRequest">
+        <wsdl:part element="tns:indexRequest" name="indexRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="HrPort">
+        <wsdl:operation name="fire">
+            <wsdl:input message="tns:fireRequest" name="fireRequest"/>
+        </wsdl:operation>
+        <wsdl:operation name="index">
+            <wsdl:input message="tns:indexRequest" name="indexRequest"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HrPortSoap11" type="tns:HrPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="fire">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="fireRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="index">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="indexRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="HrPortService">
+        <wsdl:port binding="tns:HrPortSoap11" name="HrPortSoap11">
+            <soap:address location="http://localhost:8081/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -19,11 +19,13 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>crud</module>
-<!--        <module>zuul-proxy</module>-->
-        <!--        <module>hr</module>-->
-<!--        <module>common</module>-->
-<!--        <module>crud-logic</module>-->
+        <!--        <module>crud</module>-->
+        <!--        <module>zuul-proxy</module>-->
+        <module>hr</module>
+        <module>hrhttpproxy</module>
+        <module>common</module>
+<!--        <module>muleesb</module>-->
+        <!--        <module>crud-logic</module>-->
     </modules>
 
 </project>
